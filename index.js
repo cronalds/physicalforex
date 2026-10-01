@@ -1,4 +1,6 @@
 import { currencies } from "./currencies.js";
+import * as cheerio from 'cheerio';
+
 /**
  * get percentage of base
  *
