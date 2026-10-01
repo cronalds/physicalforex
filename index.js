@@ -12,3 +12,6 @@ function getPercent(percentage, base){
 }
 
 console.log(currencies.length)
+for(let c of currencies){
+    console.log(c.country);
+}
