@@ -1,5 +1,4 @@
 import { currencies } from "./currencies.js";
-import * as cheerio from 'cheerio';
 
 /**
  * get percentage of base
@@ -12,8 +11,4 @@ function getPercent(percentage, base){
     return percentage * base;
 }
 
-console.log(currencies.length)
-
-console.log(getPercent(0.2, 170));
-console.log(getPercent(23.2, 140));
-console.log(getPercent(48, 260));
+console.log(currencies)
