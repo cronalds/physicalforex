@@ -1,7 +1,7 @@
 import * as cheerio from "cheerio";
 import * as fs from "node:fs/promises";
 
-let html = await fs.readFile("./currencies.html"); //! can use any html but this works fine; sourced from: https://www.countries-ofthe-world.com/world-currencies.html ;; wouldnt fetch
+let html = await fs.readFile("./currencies.html"); //! can use any html but this works fine; sourced from: https://www.countries-ofthe-world.com/world-currencies.html ;; wouldnt fetch; if using other html then will need to use different selectors etc
 
 let curr = [];
 
