@@ -11,4 +11,4 @@ function getPercent(percentage, base){
     return percentage * base;
 }
 
-console.log(currencies)
+console.log(currencies.length)
