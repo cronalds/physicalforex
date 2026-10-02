@@ -10,7 +10,7 @@ const $ = cheerio.load(html);
 $("table.codes tbody tr").each((_, row) => {
   let cells = $(row).find("td");
 
-  if (cells.length !== 3) return; // if not all fields in a row are present then return nothing
+  if (cells.length !== 3) return; //! if not all fields in a row are present then return nothing
 
   curr.push({
     country: $(cells[0]).text().trim(),
@@ -22,16 +22,24 @@ $("table.codes tbody tr").each((_, row) => {
 function currJoined() {
   let s = [];
   let c = [];
+  let cc = {};
   for (let item of curr) {
+    cc[item.currency]
+    ? cc[item.currency].push(item.country)
+    : cc[item.currency] = [item.country];
     if (!c.includes(item.currency)) { //! if countries use the same currency then ignore
       s.push(JSON.stringify(item));
       c.push(item.currency);
     }
   }
-  return s.join(",");
+  let newArr = [];
+  for(let i of Object.keys(cc)){
+    newArr.push({"currency":i, "countries":[...cc[i]]})
+  }
+  console.log(cc)
+  console.log(newArr)
+  return JSON.stringify(newArr);
 }
-let toWrite = `export let currencies = [
-${currJoined()}
-]`;
+let toWrite = `export let currencies = ${currJoined()};`;
 
 await fs.writeFile("./currencies.js", toWrite);
