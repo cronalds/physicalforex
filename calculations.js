@@ -1,5 +1,16 @@
 import * as ss from "simple-statistics";
 
+//!!!!!! try catch everything appropriately later; also double check shit and also get apa refs to compare things to and get further info from
+
+function ratesToReturns(ratesArray) {
+  let a = [];
+
+  for (let i = 1; i < ratesArray.length; i++) {
+    a.push(ratesArray[i] / ratesArray[i - 1] - 1);
+  }
+  return a;
+}
+
 //! inflation
 
 /**
@@ -159,14 +170,9 @@ export function maximumAppreciationOrDepreciation(
   asPercent = true,
   isDepreciation = false,
 ) {
-  let a = [];
+  let a = ratesToReturns(ratesArray);
   let isd = isDepreciation ? "min" : "max";
 
-  for (let i = 1; i < ratesArray.length; i++) {
-    let currI = ratesArray[i];
-    let prevI = ratesArray[i - 1];
-    a.push(currI / prevI - 1);
-  }
   return asPercent ? ss[isd](a) * 100 : ss[isd](a);
 }
 
@@ -195,22 +201,33 @@ export function maxDrawdown(ratesArray) {
 
 console.log(maxDrawdown(a));
 
-
 /**
  * volatility of annual returns
  *
  * @export
- * @param {*} ratesArray 
+ * @param {*} ratesArray
  * @param {*} periodsPerYear 4 = quarters, 12 = monthly, 252 = daily(depending on work day count annually)
- * @returns {number} 
+ * @returns {number}
  */
-export function annualisedVolatility(ratesArray, periodsPerYear){
-  let a = []
+export function annualisedVolatility(ratesArray, periodsPerYear) {
+  let a = ratesToReturns(ratesArray)
 
-  for(let i = 1; i < ratesArray.length; i++){
-    a.push((ratesArray[i] / ratesArray[i-1]) -1)
-  }
-  
-  return ss.standardDeviation(a) * Math.sqrt(periodsPerYear)
+  return ss.standardDeviation(a) * Math.sqrt(periodsPerYear);
 }
 
+/**
+ * Description placeholder
+ *
+ * @export
+ * @param {*} ratesArray
+ * @param {*} windowSize Number of most recent observations to include in the rolling volatility calculation. Example: 30 = use the most recent 30 observations.
+ * @param {*} periodsPerYear 4 = quarter, 12 = monthly etc
+ * @returns {number}
+ */
+export function rollingVolatility(ratesArray, windowSize, periodsPerYear) {
+  let a = ratesToReturns(ratesArray);
+
+  let recentReturns = a.slice(-windowSize);
+
+  return ss.standardDeviation(recentReturns) * Math.sqrt(periodsPerYear);
+}
