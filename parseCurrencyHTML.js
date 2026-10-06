@@ -22,10 +22,10 @@ $("table.codes tbody tr").each((_, row) => {
 function currJoined() {
   let cc = {};
   for (let item of curr) {
-    cc[item.currency]
+    cc[item.currency] //! if countries array exists then push to it otherwise create with current item
     ? cc[item.currency].push(item.country)
     : cc[item.currency] = [item.country];
-    cc[item.currency]["code"] = item.code;
+    cc[item.currency]["code"] = item.code; //! add currency code
   }
   let newArr = [];
   for(let i of Object.keys(cc)){
