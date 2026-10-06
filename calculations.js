@@ -77,7 +77,7 @@ export function debtPerCapita(governmentDebt, population) {
   return governmentDebt / population;
 }
 
-console.log(debtPerCapita(1000000000000, 38000000));
+console.log("USA DPC: ",debtPerCapita(300000000000000, 349000000));
 
 export function debtToRevenue(governmentDebt, governmentRevenue) {
   return (governmentDebt / governmentRevenue) * 100;
