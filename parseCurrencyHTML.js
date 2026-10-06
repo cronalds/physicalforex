@@ -20,21 +20,16 @@ $("table.codes tbody tr").each((_, row) => {
 });
 
 function currJoined() {
-  let s = [];
-  let c = [];
   let cc = {};
   for (let item of curr) {
     cc[item.currency]
     ? cc[item.currency].push(item.country)
     : cc[item.currency] = [item.country];
-    if (!c.includes(item.currency)) { //! if countries use the same currency then ignore
-      s.push(JSON.stringify(item));
-      c.push(item.currency);
-    }
+    cc[item.currency]["code"] = item.code;
   }
   let newArr = [];
   for(let i of Object.keys(cc)){
-    newArr.push({"currency":i, "countries":[...cc[i]]})
+    newArr.push({"currency":i, "code":cc[i].code, "countries":[...cc[i]]})
   }
   console.log(cc)
   console.log(newArr)
